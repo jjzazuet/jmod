@@ -1,0 +1,56 @@
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'cpp'
+
+    group = 'net.tribe7.jmod'
+    version '0.1'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    repositories { jcenter() }
+
+    ext {
+        genSrcDir = new File(buildDir, 'generated-src')
+        genSrcDirJava = new File(genSrcDir, 'java')
+        osName = System.getProperty('os.name').toLowerCase().replace(' ', '')
+        osArch = System.getProperty('os.arch')
+        libName = { String lib, def os ->
+            def name = new StringBuilder()
+            if (!os.windows) { name.append('lib') }
+            name.append(lib)
+            if (os.windows) { name.append('.dll') }
+            else if (os.macOsX) { name.append('.dylib') }
+            else { name.append('.so') }
+            name.toString()
+        }
+    }
+
+    model {
+        platforms { x64 { architecture "x86_64" } }
+        repositories {
+            libs(PrebuiltLibraries) {
+                def rd = rootProject.projectDir
+                def jh = System.properties['java.home']
+                jdk {
+                    headers.srcDirs "${jh}/../include", "${jh}/../include/win32",
+                            "${jh}/../include/darwin", "${jh}/../include/linux"
+                }
+                fmod {
+                    headers.srcDirs "${rd}/fmod/${osName}/inc"
+                    binaries.withType(SharedLibraryBinary) {
+                        sharedLibraryFile = file("${rd}/fmod/${osName}/lib/${osArch}/${libName('fmod', targetPlatform.operatingSystem)}")
+                    }
+                }
+                fmodStudio {
+                    headers.srcDirs "${rd}/fmod-studio/${osName}/inc"
+                    binaries.withType(SharedLibraryBinary) {
+                        sharedLibraryFile = file("${rd}/fmod-studio/${osName}/lib/${osArch}/${libName('fmodstudio', targetPlatform.operatingSystem)}")
+                    }
+                }
+            }
+        }
+    }
+
+    sourceSets.main.java.srcDirs += genSrcDirJava
+    sourceSets.main.resources.srcDirs += "${buildDir}/libs/${project.name}-jni/shared"
+}

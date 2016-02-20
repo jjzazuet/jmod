@@ -1,0 +1,11 @@
+include ':fmod', ':fmod-studio'
+
+ext.osName = System.getProperty('os.name').toLowerCase().replace(' ', '')
+ext.osArch = System.getProperty('os.arch')
+
+project(":fmod").name = "fmod-${osName}-${osArch}"
+project(":fmod-studio").name = "fmod-studio-${osName}-${osArch}"
+
+println "======================================"
+println "= OS/Arch: [${osName}/${osArch}]"
+println "======================================"

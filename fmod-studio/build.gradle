@@ -1,0 +1,34 @@
+plugins { id "net.tribe-seven.swig" version "0.1.1" }
+
+task swigGen(type: SwigTask) {
+    ext {
+        sourceDir = genSrcDirJava
+        headerDir = genSrcDirJava
+    }
+    enableCpp true
+    module 'studio'
+    packageName 'net.tribe7.fmod.studio'
+    source file("studio.i")
+    includePaths = [file("${osName}/inc"), file("../fmod"), file("../fmod/${osName}/inc")]
+    javaSourcesPath new File(genSrcDirJava, 'net/tribe7/fmod/studio')
+    wrapperTargetFile new File(genSrcDirJava, 'studio_jni.cpp')
+}
+
+model {
+    components {
+        "${project.name}-jni"(NativeLibrarySpec) {
+            targetPlatform "x64"
+            sources {
+                cpp {
+                    source {
+                        generatedBy tasks.swigGen
+                        include "**/*.cpp"
+                        lib library: 'jdk', linkage: 'api'
+                        lib library: 'fmod', linkage: 'api'
+                        lib library: 'fmodStudio', linkage: 'shared'
+                    }
+                }
+            }
+        }
+    }
+}

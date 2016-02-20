@@ -1,0 +1,35 @@
+plugins { id "net.tribe-seven.swig" version "0.1.1" }
+
+task swigGen(type: SwigTask) {
+    ext {
+        sourceDir = genSrcDirJava
+        headerDir = genSrcDirJava
+    }
+    enableCpp true
+    module 'fmod'
+    packageName 'net.tribe7.fmod.lowlevel'
+    source file("fmod.i")
+    includePaths = [file("${osName}/inc")]
+    javaSourcesPath new File(genSrcDirJava, 'net/tribe7/fmod/lowlevel')
+    wrapperTargetFile new File(genSrcDirJava, 'fmod_jni.cpp')
+}
+
+model {
+    components {
+        "${project.name}-jni"(NativeLibrarySpec) {
+            targetPlatform "x64"
+            sources {
+                cpp {
+                    source {
+                        generatedBy tasks.swigGen
+                        include "**/*.cpp"
+                        lib library: 'jdk', linkage: 'api'
+                        lib library: 'fmod', linkage: 'shared'
+                    }
+                }
+            }
+        }
+    }
+}
+
+compileJava.dependsOn swigGen
