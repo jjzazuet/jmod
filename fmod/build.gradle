@@ -7,10 +7,10 @@ task swigGen(type: SwigTask) {
     }
     enableCpp true
     module 'fmod'
-    packageName 'net.tribe7.fmod.lowlevel'
+    packageName 'net.tribe7.fmod'
     source file("fmod.i")
     includePaths = [file("${osName}/inc")]
-    javaSourcesPath new File(genSrcDirJava, 'net/tribe7/fmod/lowlevel')
+    javaSourcesPath new File(genSrcDirJava, 'net/tribe7/fmod')
     wrapperTargetFile new File(genSrcDirJava, 'fmod_jni.cpp')
 }
 
@@ -31,5 +31,3 @@ model {
         }
     }
 }
-
-compileJava.dependsOn swigGen
