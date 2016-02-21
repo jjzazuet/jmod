@@ -53,4 +53,5 @@ subprojects {
 
     sourceSets.main.java.srcDirs += genSrcDirJava
     sourceSets.main.resources.srcDirs += "${buildDir}/libs/${project.name}-jni/shared"
+    sourceSets.main.resources.srcDirs += file("${osName}/lib/${osArch}")
 }
