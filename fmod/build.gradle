@@ -6,6 +6,7 @@ task swigGen(type: SwigTask) {
         headerDir = genSrcDirJava
     }
     enableCpp true
+    verbose true
     module 'fmod'
     packageName 'net.tribe7.fmod'
     source file("fmod.i")

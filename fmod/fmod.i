@@ -3,10 +3,15 @@
 #include "fmod.hpp"
 %}
 
+%include "../shared/buffers.i"
+%apply int* BUFF {int*}
+%apply float* BUFF {float*}
+%apply void* BUFF {void*}
+%apply unsigned int* BUFF {unsigned int*}
+
+%include "std_string.i"
 %include "java.swg"
 %include "enums.swg"
-%include "std_string.i"
-%include "exception.i"
 
 %include "fmod_errors.h"
 %include "fmod_dsp_effects.h"

@@ -6,6 +6,7 @@ task swigGen(type: SwigTask) {
         headerDir = genSrcDirJava
     }
     enableCpp true
+    verbose true
     module 'studio'
     packageName 'net.tribe7.fmod.studio'
     source file("studio.i")
