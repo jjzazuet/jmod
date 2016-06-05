@@ -25,7 +25,7 @@ model {
                         generatedBy tasks.swigGen
                         include "**/*.cpp"
                         lib library: 'jdk', linkage: 'api'
-                        lib library: 'fmod', linkage: 'api'
+                        lib library: 'fmod', linkage: 'shared'
                         lib library: 'fmodStudio', linkage: 'shared'
                     }
                 }

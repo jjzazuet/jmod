@@ -4,7 +4,7 @@
  * allocate a direct buffer of the appropriate size.
  *
  * Example use:
-
+ *
  * Wrapping:
  * %include "buffers.i" 
  * %apply int* BUFF {int* buffer}
@@ -14,7 +14,6 @@
  * IntBuffer buffer = IntBuffer.allocateDirect(nInts*4).order(ByteOrder.nativeOrder()).asIntBuffer();
  * Example.read_foo_int(buffer);
  *
-
  * The following typemaps are defined:
  * void* BUFF           <--> javax.nio.Buffer
  * char* BUFF           <--> javax.nio.ByteBuffer
@@ -38,6 +37,7 @@
  * depend on the type of data. In general you'll probably
  * want to use CharBuffer for actual text data.
  */
+
 /*
  * This macro is used to define the nio buffers for primitive types.
  */
@@ -80,7 +80,6 @@ NIO_BUFFER_TYPEMAP(long long, BUFF, java.nio.LongBuffer);
 NIO_BUFFER_TYPEMAP(float, BUFF, java.nio.FloatBuffer);
 NIO_BUFFER_TYPEMAP(double, BUFF, java.nio.DoubleBuffer);
 #undef NIO_BUFFER_TYPEMAP
-
 
 %define UNSIGNED_NIO_BUFFER_TYPEMAP(CTYPE, BSIZE, BUFFERTYPE, PACKFCN, UNPACKFCN)
 %typemap(jni) CTYPE* INBUFF "jobject"
