@@ -1,4 +1,4 @@
-include ':fmod', ':fmod-studio'
+include ':fmod', ':fmod-studio', ':fmod-test'
 
 ext.osName = System.getProperty('os.name').toLowerCase().replace(' ', '')
 ext.osArch = System.getProperty('os.arch')
