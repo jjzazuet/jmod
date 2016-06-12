@@ -17,7 +17,7 @@ task swigGen(type: SwigTask) {
 
 model {
     components {
-        "${project.name}-jni"(NativeLibrarySpec) {
+        "fmod-jni"(NativeLibrarySpec) {
             targetPlatform "x64"
             sources {
                 cpp {
